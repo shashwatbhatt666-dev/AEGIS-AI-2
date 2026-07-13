@@ -74,6 +74,13 @@
 
 
 <!-- ======================================================
+     ANIMATED CYBERSECURITY GRID BACKDROP (decorative)
+======================================================= -->
+
+<div class="ax-backdrop" aria-hidden="true"></div>
+
+
+<!-- ======================================================
      APPLICATION
 ======================================================= -->
 
@@ -298,6 +305,48 @@
                     <span id="backendStatusText">
                         Connecting...
                     </span>
+
+                </div>
+
+
+                <button
+                    class="ax-cmd-hint"
+                    id="axCommandHint"
+                    type="button"
+                    title="Open command palette"
+                >
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <span class="ax-cmd-hint-text">
+                        Search
+                    </span>
+
+                    <span class="ax-kbd">
+                        <i class="fa-solid fa-keyboard"></i>
+                        K
+                    </span>
+
+                </button>
+
+
+                <div class="ax-icon-btn-wrap">
+
+                    <button
+                        class="icon-button"
+                        id="axNotificationBtn"
+                        type="button"
+                        title="Notification center"
+                    >
+
+                        <i class="fa-solid fa-bell"></i>
+
+                    </button>
+
+                    <span
+                        class="ax-noti-dot"
+                        id="axNotificationDot"
+                    ></span>
 
                 </div>
 
@@ -1464,6 +1513,272 @@
 
 
 <!-- ======================================================
+     COMMAND PALETTE  (Ctrl / Cmd + K)  — optional feature
+======================================================= -->
+
+<div
+    class="ax-overlay"
+    id="axCommandPalette"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Command palette"
+>
+
+    <div class="ax-cmdk">
+
+        <div class="ax-cmdk-search">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="axCommandInput"
+                placeholder="Search sections, actions and threat controls..."
+                autocomplete="off"
+            >
+
+            <span class="ax-kbd">ESC</span>
+
+        </div>
+
+        <div
+            class="ax-cmdk-list"
+            id="axCommandList"
+        ></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     NOTIFICATION CENTER — optional feature
+======================================================= -->
+
+<aside
+    class="ax-drawer"
+    id="axNotificationDrawer"
+    aria-label="Notification center"
+>
+
+    <div class="ax-drawer-head">
+
+        <div>
+
+            <h3>Notification Center</h3>
+
+            <div class="ax-drawer-sub">
+                Real-time security alerts
+            </div>
+
+        </div>
+
+        <button
+            class="ax-drawer-close"
+            id="axNotificationClose"
+            type="button"
+            aria-label="Close notifications"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+    </div>
+
+    <div
+        class="ax-drawer-body"
+        id="axNotificationBody"
+    ></div>
+
+</aside>
+
+
+
+<!-- ======================================================
+     LIVE THREAT ACTIVITY FEED — optional feature
+======================================================= -->
+
+<aside
+    class="ax-drawer"
+    id="axThreatFeed"
+    aria-label="Live threat activity feed"
+>
+
+    <div class="ax-drawer-head">
+
+        <div>
+
+            <h3>Live Threat Feed</h3>
+
+            <div class="ax-drawer-sub">
+                Streaming detection telemetry
+            </div>
+
+        </div>
+
+        <button
+            class="ax-drawer-close"
+            id="axThreatFeedClose"
+            type="button"
+            aria-label="Close threat feed"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+    </div>
+
+    <div class="ax-feed-gauge">
+
+        <div
+            class="ax-gauge"
+            id="axFeedGauge"
+        >
+            <span id="axFeedGaugeValue">0</span>
+        </div>
+
+        <div class="ax-feed-gauge-meta">
+
+            <strong id="axFeedGaugeLabel">
+                Analyzing...
+            </strong>
+
+            <small>
+                Aggregate live risk score
+            </small>
+
+        </div>
+
+    </div>
+
+    <div
+        class="ax-drawer-body"
+        id="axThreatFeedBody"
+    ></div>
+
+</aside>
+
+
+
+<!-- ======================================================
+     AI SECURITY COPILOT — optional feature (client-side)
+======================================================= -->
+
+<section
+    class="ax-copilot"
+    id="axCopilot"
+    aria-label="AI Security Copilot"
+>
+
+    <div class="ax-copilot-head">
+
+        <div class="ax-copilot-avatar">
+            <i class="fa-solid fa-robot"></i>
+        </div>
+
+        <div>
+
+            <h3>AEGIS Copilot</h3>
+
+            <small>
+                <span class="status-dot"></span>
+                AI security assistant
+            </small>
+
+        </div>
+
+        <button
+            class="ax-drawer-close"
+            id="axCopilotClose"
+            type="button"
+            aria-label="Close copilot"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+    </div>
+
+    <div
+        class="ax-copilot-body"
+        id="axCopilotBody"
+    ></div>
+
+    <div
+        class="ax-copilot-suggest"
+        id="axCopilotSuggest"
+    >
+
+        <button class="ax-chip" type="button" data-ask="What is the current risk posture?">
+            Current posture
+        </button>
+
+        <button class="ax-chip" type="button" data-ask="How many active incidents are there?">
+            Active incidents
+        </button>
+
+        <button class="ax-chip" type="button" data-ask="Explain the anomaly rate.">
+            Anomaly rate
+        </button>
+
+    </div>
+
+    <form
+        class="ax-copilot-input"
+        id="axCopilotForm"
+    >
+
+        <input
+            type="text"
+            id="axCopilotInput"
+            placeholder="Ask the AEGIS Copilot..."
+            autocomplete="off"
+        >
+
+        <button type="submit" aria-label="Send message">
+            <i class="fa-solid fa-paper-plane"></i>
+        </button>
+
+    </form>
+
+</section>
+
+
+
+<!-- ======================================================
+     FLOATING ACTION DOCK — optional feature triggers
+======================================================= -->
+
+<div class="ax-fab-dock">
+
+    <button
+        class="ax-fab secondary"
+        id="axThreatFeedBtn"
+        type="button"
+        title="Live threat feed"
+    >
+
+        <i class="fa-solid fa-satellite-dish"></i>
+
+        <span
+            class="ax-fab-badge"
+            id="axThreatFeedBadge"
+        >0</span>
+
+    </button>
+
+    <button
+        class="ax-fab"
+        id="axCopilotBtn"
+        type="button"
+        title="AI Security Copilot"
+    >
+        <i class="fa-solid fa-robot"></i>
+    </button>
+
+</div>
+
+
+
+<!-- ======================================================
      TOAST NOTIFICATIONS
 ======================================================= -->
 
@@ -1502,6 +1817,9 @@
 ======================================================= -->
 
 <script src="script.js"></script>
+
+<!-- Optional 2026 SOC UX layer — isolated, non-invasive -->
+<script src="enhancements.js"></script>
 
 
 </body>
