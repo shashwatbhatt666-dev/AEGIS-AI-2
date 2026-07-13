@@ -4112,3 +4112,1303 @@ tbody tr:hover {
     }
 
 }
+
+
+/* =========================================================
+   =========================================================
+   AEGIS 2026 — ENTERPRISE SOC REDESIGN LAYER
+   Additive overrides + new isolated components.
+   Nothing below removes classes used by script.js.
+   =========================================================
+========================================================= */
+
+:root {
+
+    --ax-grid-line: rgba(56, 189, 248, 0.045);
+    --ax-scan: rgba(56, 189, 248, 0.05);
+    --ax-glass: rgba(13, 20, 34, 0.72);
+    --ax-glass-strong: rgba(15, 23, 39, 0.92);
+    --ax-elev: 0 24px 60px -28px rgba(2, 6, 16, 0.9);
+    --ax-ring: rgba(56, 189, 248, 0.35);
+
+}
+
+
+/* ---------------------------------------------------------
+   ANIMATED CYBERSECURITY GRID + SCANLINE BACKGROUND
+--------------------------------------------------------- */
+
+.ax-backdrop {
+
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+
+}
+
+
+.ax-backdrop::before {
+
+    content: "";
+    position: absolute;
+    inset: -2px;
+
+    background-image:
+        linear-gradient(var(--ax-grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--ax-grid-line) 1px, transparent 1px);
+
+    background-size: 46px 46px;
+
+    mask-image:
+        radial-gradient(circle at 30% 12%, #000 0%, transparent 62%),
+        radial-gradient(circle at 85% 90%, #000 0%, transparent 60%);
+
+    -webkit-mask-image:
+        radial-gradient(circle at 30% 12%, #000 0%, transparent 62%),
+        radial-gradient(circle at 85% 90%, #000 0%, transparent 60%);
+
+    animation: axGridDrift 22s linear infinite;
+
+}
+
+
+.ax-backdrop::after {
+
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 180px;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            var(--ax-scan) 45%,
+            transparent
+        );
+
+    animation: axScan 9s ease-in-out infinite;
+
+}
+
+
+@keyframes axGridDrift {
+
+    0%   { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(46px, 46px, 0); }
+
+}
+
+
+@keyframes axScan {
+
+    0%   { top: -180px; opacity: 0; }
+    12%  { opacity: 1; }
+    88%  { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+
+}
+
+
+/* keep real app content above the backdrop */
+
+.app-shell,
+.toast-container,
+.loading-overlay {
+
+    position: relative;
+    z-index: 1;
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .ax-backdrop::before,
+    .ax-backdrop::after {
+        animation: none;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   REFINED GLASSMORPHISM + MICRO-INTERACTIONS
+--------------------------------------------------------- */
+
+.panel {
+
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    background: var(--ax-glass);
+    box-shadow: var(--ax-elev);
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+
+}
+
+
+.panel:hover {
+
+    border-color: rgba(56, 189, 248, 0.22);
+
+}
+
+
+.metric-card {
+
+    background: var(--ax-glass);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    box-shadow: var(--ax-elev);
+
+}
+
+
+/* animated sweeping sheen on metric cards */
+
+.metric-card::before {
+
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            100deg,
+            transparent,
+            rgba(255, 255, 255, 0.06),
+            transparent
+        );
+
+    transition: left 0.7s ease;
+
+}
+
+
+.metric-card:hover::before {
+
+    left: 140%;
+
+}
+
+
+.metric-card:hover {
+
+    box-shadow:
+        0 26px 60px -26px rgba(2, 6, 16, 0.95),
+        0 0 0 1px rgba(56, 189, 248, 0.14);
+
+}
+
+
+/* animated top accent bar on metric cards */
+
+.metric-card::after {
+
+    top: -60px;
+    right: -40px;
+
+}
+
+
+.metric-value {
+
+    background:
+        linear-gradient(180deg, #ffffff, #cbd7e6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+
+
+.danger-card .metric-value {
+
+    background: linear-gradient(180deg, #ffe3e3, #fca5a5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+
+
+/* counting shimmer while animating */
+
+.metric-value.ax-counting {
+
+    text-shadow: 0 0 22px rgba(56, 189, 248, 0.35);
+
+}
+
+
+/* nav micro-interaction */
+
+.nav-item {
+
+    transition:
+        color var(--transition),
+        background var(--transition),
+        transform 0.18s ease,
+        border-color var(--transition);
+
+}
+
+
+.nav-item:hover {
+
+    transform: translateX(3px);
+
+}
+
+
+.brand-icon {
+
+    animation: axBadgeGlow 4s ease-in-out infinite;
+
+}
+
+
+@keyframes axBadgeGlow {
+
+    0%, 100% { box-shadow: 0 0 26px rgba(56, 189, 248, 0.12); }
+    50%      { box-shadow: 0 0 40px rgba(56, 189, 248, 0.30); }
+
+}
+
+
+/* buttons: sharper depth */
+
+.primary-button {
+
+    position: relative;
+    overflow: hidden;
+
+}
+
+
+.primary-button::after {
+
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            120deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.35) 50%,
+            transparent 70%
+        );
+    transform: translateX(-120%);
+    transition: transform 0.6s ease;
+
+}
+
+
+.primary-button:hover::after {
+
+    transform: translateX(120%);
+
+}
+
+
+/* section transition — richer entrance */
+
+.page-section.active {
+
+    animation: axSectionIn 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+
+}
+
+
+@keyframes axSectionIn {
+
+    from { opacity: 0; transform: translateY(14px) scale(0.994); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+
+}
+
+
+/* ---------------------------------------------------------
+   SKELETON LOADERS
+--------------------------------------------------------- */
+
+.ax-skeleton {
+
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(148, 163, 184, 0.08);
+
+}
+
+
+.ax-skeleton::after {
+
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(148, 163, 184, 0.14),
+            transparent
+        );
+    animation: axShimmer 1.4s infinite;
+
+}
+
+
+@keyframes axShimmer {
+
+    100% { transform: translateX(100%); }
+
+}
+
+
+.ax-skel-row {
+
+    height: 14px;
+    margin: 10px 0;
+
+}
+
+
+.ax-skel-row.sm { width: 55%; }
+.ax-skel-row.lg { width: 90%; }
+
+
+/* ---------------------------------------------------------
+   TOPBAR — NOTIFICATION BELL + COMMAND HINT
+--------------------------------------------------------- */
+
+.ax-icon-btn-wrap {
+
+    position: relative;
+
+}
+
+
+.ax-noti-dot {
+
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--danger);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.9);
+    display: none;
+
+}
+
+
+.ax-noti-dot.show {
+
+    display: block;
+    animation: axPulseDot 1.6s infinite;
+
+}
+
+
+@keyframes axPulseDot {
+
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(1.35); opacity: 0.65; }
+
+}
+
+
+.ax-cmd-hint {
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.025);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    transition: all var(--transition);
+
+}
+
+
+.ax-cmd-hint:hover {
+
+    color: var(--accent-primary);
+    border-color: var(--border-bright);
+    background: rgba(56, 189, 248, 0.07);
+
+}
+
+
+.ax-kbd {
+
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: rgba(148, 163, 184, 0.08);
+    color: var(--text-secondary);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+
+}
+
+
+/* ---------------------------------------------------------
+   COMMAND PALETTE (Ctrl / Cmd + K)
+--------------------------------------------------------- */
+
+.ax-overlay {
+
+    position: fixed;
+    inset: 0;
+    z-index: 4000;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    background: rgba(3, 6, 14, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: opacity 0.22s ease, visibility 0.22s ease;
+
+}
+
+
+.ax-overlay.open {
+
+    opacity: 1;
+    visibility: visible;
+
+}
+
+
+.ax-cmdk {
+
+    width: min(620px, 92vw);
+    max-height: 62vh;
+    margin: 12vh auto auto;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--ax-ring);
+    border-radius: 18px;
+    background: var(--ax-glass-strong);
+    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.9);
+    transform: translateY(-14px) scale(0.98);
+    transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+
+}
+
+
+.ax-overlay.open .ax-cmdk {
+
+    transform: translateY(0) scale(1);
+
+}
+
+
+.ax-cmdk-search {
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border-color);
+
+}
+
+
+.ax-cmdk-search i {
+
+    color: var(--accent-primary);
+    font-size: 16px;
+
+}
+
+
+.ax-cmdk-search input {
+
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 15px;
+
+}
+
+
+.ax-cmdk-list {
+
+    overflow-y: auto;
+    padding: 8px;
+
+}
+
+
+.ax-cmdk-group {
+
+    padding: 10px 12px 4px;
+    color: var(--text-muted);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+
+}
+
+
+.ax-cmdk-item {
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    background: transparent;
+    color: var(--text-secondary);
+    text-align: left;
+    transition: all 0.14s ease;
+
+}
+
+
+.ax-cmdk-item i {
+
+    width: 18px;
+    color: var(--text-muted);
+    text-align: center;
+
+}
+
+
+.ax-cmdk-item .ax-cmdk-label {
+
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+
+}
+
+
+.ax-cmdk-item .ax-cmdk-sub {
+
+    font-size: 11px;
+    color: var(--text-muted);
+
+}
+
+
+.ax-cmdk-item.active,
+.ax-cmdk-item:hover {
+
+    border-color: rgba(56, 189, 248, 0.2);
+    background:
+        linear-gradient(
+            90deg,
+            rgba(56, 189, 248, 0.14),
+            rgba(56, 189, 248, 0.03)
+        );
+    color: #fff;
+
+}
+
+
+.ax-cmdk-item.active i,
+.ax-cmdk-item:hover i {
+
+    color: var(--accent-primary);
+
+}
+
+
+.ax-cmdk-empty {
+
+    padding: 26px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+
+}
+
+
+/* ---------------------------------------------------------
+   NOTIFICATION CENTER (slide-in panel)
+--------------------------------------------------------- */
+
+.ax-drawer {
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 3500;
+    width: min(400px, 92vw);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--border-color);
+    background: var(--ax-glass-strong);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    box-shadow: -30px 0 80px -40px rgba(0, 0, 0, 0.9);
+    transform: translateX(105%);
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+
+}
+
+
+.ax-drawer.open {
+
+    transform: translateX(0);
+
+}
+
+
+.ax-drawer-head {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 20px;
+    border-bottom: 1px solid var(--border-color);
+
+}
+
+
+.ax-drawer-head h3 {
+
+    font-size: 15px;
+    font-weight: 700;
+
+}
+
+
+.ax-drawer-head .ax-drawer-sub {
+
+    margin-top: 3px;
+    color: var(--text-muted);
+    font-size: 11px;
+
+}
+
+
+.ax-drawer-close {
+
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    transition: all var(--transition);
+
+}
+
+
+.ax-drawer-close:hover {
+
+    color: var(--danger);
+    border-color: rgba(239, 68, 68, 0.35);
+
+}
+
+
+.ax-drawer-body {
+
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+
+}
+
+
+.ax-noti {
+
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.02);
+    animation: axSectionIn 0.3s ease;
+
+}
+
+
+.ax-noti-ico {
+
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    font-size: 13px;
+    color: var(--accent-primary);
+    background: rgba(56, 189, 248, 0.1);
+
+}
+
+
+.ax-noti.error .ax-noti-ico { color: var(--danger); background: rgba(239, 68, 68, 0.1); }
+.ax-noti.warning .ax-noti-ico { color: var(--warning); background: rgba(245, 158, 11, 0.1); }
+.ax-noti.success .ax-noti-ico { color: var(--success); background: rgba(34, 197, 94, 0.1); }
+
+
+.ax-noti-body strong {
+
+    display: block;
+    margin-bottom: 3px;
+    font-size: 13px;
+
+}
+
+
+.ax-noti-body p {
+
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.5;
+
+}
+
+
+.ax-noti-body time {
+
+    display: block;
+    margin-top: 6px;
+    color: var(--text-muted);
+    font-size: 10px;
+    font-family: "JetBrains Mono", monospace;
+
+}
+
+
+/* ---------------------------------------------------------
+   LIVE THREAT ACTIVITY FEED (drawer, left of copilot)
+--------------------------------------------------------- */
+
+.ax-feed-gauge {
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+
+}
+
+
+.ax-gauge {
+
+    --val: 0;
+    position: relative;
+    width: 66px;
+    height: 66px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background:
+        conic-gradient(
+            var(--ax-gauge-color, var(--accent-primary))
+                calc(var(--val) * 1%),
+            rgba(148, 163, 184, 0.12) 0
+        );
+    transition: background 0.6s ease;
+
+}
+
+
+.ax-gauge::before {
+
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+
+}
+
+
+.ax-gauge span {
+
+    position: relative;
+    z-index: 1;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px;
+    font-weight: 700;
+
+}
+
+
+.ax-feed-gauge-meta strong {
+
+    display: block;
+    font-size: 13px;
+
+}
+
+
+.ax-feed-gauge-meta small {
+
+    color: var(--text-muted);
+    font-size: 11px;
+
+}
+
+
+.ax-feed-item {
+
+    display: flex;
+    gap: 12px;
+    padding: 13px 14px;
+    margin-bottom: 9px;
+    border: 1px solid var(--border-color);
+    border-left-width: 3px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.02);
+    animation: axFeedIn 0.4s ease;
+
+}
+
+
+@keyframes axFeedIn {
+
+    from { opacity: 0; transform: translateX(16px); }
+    to   { opacity: 1; transform: translateX(0); }
+
+}
+
+
+.ax-feed-item.critical { border-left-color: var(--critical); }
+.ax-feed-item.high { border-left-color: var(--danger); }
+.ax-feed-item.medium { border-left-color: var(--warning); }
+.ax-feed-item.low { border-left-color: var(--success); }
+
+
+.ax-feed-item .ax-feed-dot {
+
+    width: 8px;
+    height: 8px;
+    margin-top: 5px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: currentColor;
+
+}
+
+
+.ax-feed-item.critical .ax-feed-dot,
+.ax-feed-item.critical time { color: var(--critical); }
+.ax-feed-item.high .ax-feed-dot,
+.ax-feed-item.high time { color: var(--danger); }
+.ax-feed-item.medium .ax-feed-dot,
+.ax-feed-item.medium time { color: var(--warning); }
+.ax-feed-item.low .ax-feed-dot,
+.ax-feed-item.low time { color: var(--success); }
+
+
+.ax-feed-body strong {
+
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12.5px;
+    color: var(--text-primary);
+
+}
+
+
+.ax-feed-body p {
+
+    color: var(--text-secondary);
+    font-size: 11px;
+    line-height: 1.45;
+
+}
+
+
+.ax-feed-body time {
+
+    display: block;
+    margin-top: 5px;
+    font-size: 10px;
+    font-family: "JetBrains Mono", monospace;
+
+}
+
+
+/* ---------------------------------------------------------
+   FLOATING ACTION DOCK (feed + copilot triggers)
+--------------------------------------------------------- */
+
+.ax-fab-dock {
+
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+}
+
+
+.ax-fab {
+
+    position: relative;
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    border: 1px solid var(--ax-ring);
+    color: #03111b;
+    font-size: 19px;
+    background: linear-gradient(135deg, #38bdf8, #22d3ee);
+    box-shadow: 0 18px 40px -14px rgba(56, 189, 248, 0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+}
+
+
+.ax-fab.secondary {
+
+    color: var(--text-primary);
+    background: var(--ax-glass-strong);
+    border-color: var(--border-color);
+    box-shadow: var(--ax-elev);
+
+}
+
+
+.ax-fab:hover {
+
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 24px 50px -16px rgba(56, 189, 248, 0.6);
+
+}
+
+
+.ax-fab-badge {
+
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    display: grid;
+    place-items: center;
+    border-radius: 20px;
+    background: var(--danger);
+    color: #fff;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 700;
+
+}
+
+
+/* ---------------------------------------------------------
+   AI SECURITY COPILOT
+--------------------------------------------------------- */
+
+.ax-copilot {
+
+    position: fixed;
+    right: 24px;
+    bottom: 94px;
+    z-index: 3200;
+    width: min(400px, 92vw);
+    height: min(560px, 76vh);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--ax-ring);
+    border-radius: 20px;
+    background: var(--ax-glass-strong);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.9);
+    transform: translateY(20px) scale(0.96);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+
+}
+
+
+.ax-copilot.open {
+
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
+
+}
+
+
+.ax-copilot-head {
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border-color);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(56, 189, 248, 0.12),
+            transparent
+        );
+
+}
+
+
+.ax-copilot-head .ax-copilot-avatar {
+
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    color: var(--accent-primary);
+    background: rgba(56, 189, 248, 0.14);
+    border: 1px solid var(--ax-ring);
+    font-size: 17px;
+
+}
+
+
+.ax-copilot-head h3 {
+
+    font-size: 14px;
+    font-weight: 700;
+
+}
+
+
+.ax-copilot-head small {
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+    color: var(--success);
+    font-size: 10px;
+
+}
+
+
+.ax-copilot-head .ax-drawer-close {
+
+    margin-left: auto;
+
+}
+
+
+.ax-copilot-body {
+
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+}
+
+
+.ax-msg {
+
+    max-width: 86%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 12.5px;
+    line-height: 1.55;
+    animation: axSectionIn 0.25s ease;
+
+}
+
+
+.ax-msg.bot {
+
+    align-self: flex-start;
+    border: 1px solid var(--border-color);
+    border-bottom-left-radius: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+
+}
+
+
+.ax-msg.user {
+
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+    color: #03111b;
+    background: linear-gradient(135deg, #38bdf8, #22d3ee);
+
+}
+
+
+.ax-msg strong { color: var(--accent-primary); }
+.ax-msg.user strong { color: #032331; }
+
+
+.ax-msg-typing {
+
+    align-self: flex-start;
+    display: flex;
+    gap: 4px;
+    padding: 14px;
+
+}
+
+
+.ax-msg-typing span {
+
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    animation: axTyping 1.2s infinite;
+
+}
+
+
+.ax-msg-typing span:nth-child(2) { animation-delay: 0.2s; }
+.ax-msg-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+
+@keyframes axTyping {
+
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-5px); opacity: 1; }
+
+}
+
+
+.ax-copilot-suggest {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 0 18px 12px;
+
+}
+
+
+.ax-chip {
+
+    padding: 7px 11px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.05);
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+
+}
+
+
+.ax-chip:hover {
+
+    color: var(--accent-primary);
+    border-color: var(--border-bright);
+    background: rgba(56, 189, 248, 0.1);
+
+}
+
+
+.ax-copilot-input {
+
+    display: flex;
+    gap: 9px;
+    padding: 14px 16px;
+    border-top: 1px solid var(--border-color);
+
+}
+
+
+.ax-copilot-input input {
+
+    flex: 1;
+    padding: 11px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+    font-size: 13px;
+
+}
+
+
+.ax-copilot-input input:focus {
+
+    border-color: var(--border-bright);
+
+}
+
+
+.ax-copilot-input button {
+
+    width: 44px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    color: #03111b;
+    background: linear-gradient(135deg, #38bdf8, #22d3ee);
+    transition: transform 0.15s ease;
+
+}
+
+
+.ax-copilot-input button:hover { transform: scale(1.06); }
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    .ax-cmd-hint .ax-cmd-hint-text { display: none; }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .ax-fab-dock { right: 16px; bottom: 16px; }
+    .ax-copilot { right: 16px; bottom: 84px; }
+
+}
