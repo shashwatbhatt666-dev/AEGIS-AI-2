@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="AEGIS AI - Intelligent Security Operations and Threat Intelligence Platform"
+    >
+
+    <title>
+        AEGIS AI | Security Operations Center
+    </title>
+
+
+    <!-- ==================================================
+         GOOGLE FONT
+    =================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- ==================================================
+         ICONS
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- ==================================================
+         CHART.JS
+    =================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <!-- ==================================================
+         MAIN STYLESHEET
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     APPLICATION
+======================================================= -->
+
+<div class="app-shell">
+
+
+    <!-- ==================================================
+         SIDEBAR
+    =================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-icon">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+            </div>
+
+
+            <div class="brand-text">
+
+                <h1>
+                    AEGIS
+                </h1>
+
+                <span>
+                    AI SECURITY
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="navigation">
+
+
+            <button
+                class="nav-item active"
+                data-section="dashboard"
+            >
+
+                <i class="fa-solid fa-grid-2"></i>
+
+                <span>
+                    Command Center
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-section="events"
+            >
+
+                <i class="fa-solid fa-wave-square"></i>
+
+                <span>
+                    Security Events
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-section="incidents"
+            >
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                <span>
+                    Incidents
+                </span>
+
+                <span
+                    class="nav-badge"
+                    id="incidentBadge"
+                >
+                    0
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-section="entities"
+            >
+
+                <i class="fa-solid fa-fingerprint"></i>
+
+                <span>
+                    Entity Intelligence
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-section="analytics"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <span>
+                    Analytics
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-section="simulation"
+            >
+
+                <i class="fa-solid fa-flask"></i>
+
+                <span>
+                    Simulation Lab
+                </span>
+
+            </button>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <div class="system-mini-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        AEGIS Core
+                    </strong>
+
+                    <small>
+                        All systems operational
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- ==================================================
+         MAIN APPLICATION AREA
+    =================================================== -->
+
+    <main class="main-area">
+
+
+        <!-- ==================================================
+             TOP BAR
+        =================================================== -->
+
+        <header class="topbar">
+
+
+            <div class="topbar-left">
+
+                <button
+                    class="menu-button"
+                    id="menuButton"
+                >
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+
+                <div>
+
+                    <p class="eyebrow">
+                        SECURITY OPERATIONS CENTER
+                    </p>
+
+                    <h2 id="pageTitle">
+                        Command Center
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+
+                <div class="backend-status">
+
+                    <span
+                        class="status-dot"
+                        id="backendStatusDot"
+                    ></span>
+
+                    <span id="backendStatusText">
+                        Connecting...
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="icon-button"
+                    id="refreshButton"
+                    title="Refresh data"
+                >
+
+                    <i class="fa-solid fa-rotate"></i>
+
+                </button>
+
+
+                <div class="analyst-profile">
+
+                    <div class="analyst-avatar">
+                        SOC
+                    </div>
+
+                    <div class="analyst-info">
+
+                        <strong>
+                            Security Analyst
+                        </strong>
+
+                        <small>
+                            Command Access
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- ==================================================
+             CONTENT
+        =================================================== -->
+
+        <div class="content-area">
+
+
+            <!-- ==================================================
+                 DASHBOARD SECTION
+            =================================================== -->
+
+            <section
+                class="page-section active"
+                id="dashboardSection"
+            >
+
+
+                <!-- HERO -->
+
+                <div class="command-hero">
+
+                    <div>
+
+                        <span class="hero-label">
+
+                            <span class="pulse-dot"></span>
+
+                            LIVE SECURITY POSTURE
+
+                        </span>
+
+
+                        <h1>
+                            Threat Intelligence
+                            <span>Command Center</span>
+                        </h1>
+
+
+                        <p>
+                            Real-time hybrid AI detection,
+                            behavioral anomaly analysis and
+                            correlated incident intelligence.
+                        </p>
+
+                    </div>
+
+
+                    <div class="hero-actions">
+
+                        <button
+                            class="primary-button"
+                            onclick="navigateToSection('simulation')"
+                        >
+
+                            <i class="fa-solid fa-play"></i>
+
+                            Run Simulation
+
+                        </button>
+
+
+                        <button
+                            class="secondary-button"
+                            onclick="refreshAllData()"
+                        >
+
+                            <i class="fa-solid fa-arrows-rotate"></i>
+
+                            Refresh Intelligence
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- METRIC CARDS -->
+
+                <div class="metrics-grid">
+
+
+                    <article class="metric-card">
+
+                        <div class="metric-top">
+
+                            <div class="metric-icon">
+
+                                <i class="fa-solid fa-wave-square"></i>
+
+                            </div>
+
+                            <span class="metric-trend neutral">
+                                LIVE
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="metric-value"
+                            id="totalEventsMetric"
+                        >
+                            0
+                        </div>
+
+                        <div class="metric-label">
+                            Security Events
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="metric-card danger-card">
+
+                        <div class="metric-top">
+
+                            <div class="metric-icon danger">
+
+                                <i class="fa-solid fa-fire"></i>
+
+                            </div>
+
+                            <span class="metric-trend danger">
+                                RISK
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="metric-value"
+                            id="highRiskMetric"
+                        >
+                            0
+                        </div>
+
+                        <div class="metric-label">
+                            High Risk Events
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="metric-card">
+
+                        <div class="metric-top">
+
+                            <div class="metric-icon warning">
+
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                            </div>
+
+                            <span class="metric-trend warning">
+                                ACTIVE
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="metric-value"
+                            id="activeIncidentsMetric"
+                        >
+                            0
+                        </div>
+
+                        <div class="metric-label">
+                            Active Incidents
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="metric-card">
+
+                        <div class="metric-top">
+
+                            <div class="metric-icon intelligence">
+
+                                <i class="fa-solid fa-brain"></i>
+
+                            </div>
+
+                            <span class="metric-trend intelligence">
+                                AI
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="metric-value"
+                            id="anomalyRateMetric"
+                        >
+                            0%
+                        </div>
+
+                        <div class="metric-label">
+                            Anomaly Rate
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+
+
+                <!-- MAIN DASHBOARD GRID -->
+
+                <div class="dashboard-grid">
+
+
+                    <!-- RISK TREND -->
+
+                    <article class="panel chart-panel large-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-eyebrow">
+                                    THREAT TELEMETRY
+                                </span>
+
+                                <h3>
+                                    Risk Activity Trend
+                                </h3>
+
+                            </div>
+
+
+                            <span class="live-indicator">
+
+                                <span class="pulse-dot"></span>
+
+                                LIVE
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="chart-container">
+
+                            <canvas id="riskTrendChart"></canvas>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- SEVERITY -->
+
+                    <article class="panel chart-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-eyebrow">
+                                    DISTRIBUTION
+                                </span>
+
+                                <h3>
+                                    Threat Severity
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="chart-container donut-container">
+
+                            <canvas id="severityChart"></canvas>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- INCIDENTS -->
+
+                    <article class="panel large-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-eyebrow">
+                                    INCIDENT RESPONSE
+                                </span>
+
+                                <h3>
+                                    Active Incidents
+                                </h3>
+
+                            </div>
+
+
+                            <button
+                                class="text-button"
+                                onclick="navigateToSection('incidents')"
+                            >
+                                View All
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="incident-list"
+                            id="dashboardIncidentList"
+                        >
+
+                            <div class="empty-state">
+
+                                <i class="fa-solid fa-shield"></i>
+
+                                <p>
+                                    Loading incidents...
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- TOP ENTITIES -->
+
+                    <article class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-eyebrow">
+                                    ENTITY RISK
+                                </span>
+
+                                <h3>
+                                    High Risk Users
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="entity-ranking"
+                            id="topUsersList"
+                        ></div>
+
+                    </article>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 SECURITY EVENTS SECTION
+            =================================================== -->
+
+            <section
+                class="page-section"
+                id="eventsSection"
+            >
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            EVENT TELEMETRY
+                        </span>
+
+                        <h1>
+                            Security Events
+                        </h1>
+
+                        <p>
+                            Search, filter and inspect analyzed
+                            security telemetry.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="primary-button"
+                        onclick="loadEvents()"
+                    >
+
+                        <i class="fa-solid fa-rotate"></i>
+
+                        Refresh Events
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- FILTERS -->
+
+                <div class="filter-bar">
+
+
+                    <div class="search-box">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="text"
+                            id="eventSearch"
+                            placeholder="Search user, IP, device or event ID..."
+                        >
+
+                    </div>
+
+
+                    <select id="severityFilter">
+
+                        <option value="">
+                            All Severities
+                        </option>
+
+                        <option value="Critical">
+                            Critical
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                        <option value="Medium">
+                            Medium
+                        </option>
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                    </select>
+
+
+                    <input
+                        type="number"
+                        id="minRiskFilter"
+                        placeholder="Min Risk"
+                        min="0"
+                        max="100"
+                    >
+
+
+                    <button
+                        class="secondary-button"
+                        onclick="loadEvents()"
+                    >
+
+                        <i class="fa-solid fa-filter"></i>
+
+                        Apply Filters
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- EVENTS TABLE -->
+
+                <div class="panel table-panel">
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Event
+                                    </th>
+
+                                    <th>
+                                        Type
+                                    </th>
+
+                                    <th>
+                                        User
+                                    </th>
+
+                                    <th>
+                                        Source IP
+                                    </th>
+
+                                    <th>
+                                        Risk
+                                    </th>
+
+                                    <th>
+                                        Severity
+                                    </th>
+
+                                    <th>
+                                        Time
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="eventsTableBody">
+
+                                <tr>
+
+                                    <td
+                                        colspan="7"
+                                        class="table-empty"
+                                    >
+                                        Loading security events...
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 INCIDENTS SECTION
+            =================================================== -->
+
+            <section
+                class="page-section"
+                id="incidentsSection"
+            >
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            CASE MANAGEMENT
+                        </span>
+
+                        <h1>
+                            Incident Center
+                        </h1>
+
+                        <p>
+                            Investigate correlated threats,
+                            manage status and maintain analyst notes.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="primary-button"
+                        onclick="correlateIncidents()"
+                    >
+
+                        <i class="fa-solid fa-link"></i>
+
+                        Run Correlation
+
+                    </button>
+
+                </div>
+
+
+                <div class="incident-workspace">
+
+
+                    <div
+                        class="panel incident-browser"
+                        id="incidentBrowser"
+                    >
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                            <p>
+                                Loading incidents...
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="panel incident-detail"
+                        id="incidentDetail"
+                    >
+
+                        <div class="empty-state large-empty">
+
+                            <i class="fa-solid fa-crosshairs"></i>
+
+                            <h3>
+                                Select an incident
+                            </h3>
+
+                            <p>
+                                Choose an incident to begin investigation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 ENTITY INTELLIGENCE SECTION
+            =================================================== -->
+
+            <section
+                class="page-section"
+                id="entitiesSection"
+            >
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            INVESTIGATION GRAPH
+                        </span>
+
+                        <h1>
+                            Entity Intelligence
+                        </h1>
+
+                        <p>
+                            Investigate users, IP addresses and
+                            devices across the AEGIS telemetry graph.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="entity-search-panel panel">
+
+
+                    <div class="entity-type-selector">
+
+
+                        <button
+                            class="entity-type-button active"
+                            data-entity-type="users"
+                        >
+
+                            <i class="fa-solid fa-user"></i>
+
+                            User
+
+                        </button>
+
+
+                        <button
+                            class="entity-type-button"
+                            data-entity-type="ips"
+                        >
+
+                            <i class="fa-solid fa-globe"></i>
+
+                            IP Address
+
+                        </button>
+
+
+                        <button
+                            class="entity-type-button"
+                            data-entity-type="devices"
+                        >
+
+                            <i class="fa-solid fa-laptop"></i>
+
+                            Device
+
+                        </button>
+
+
+                    </div>
+
+
+                    <div class="entity-search-row">
+
+                        <input
+                            type="text"
+                            id="entitySearchInput"
+                            placeholder="Enter user ID, IP address or device ID..."
+                        >
+
+
+                        <button
+                            class="primary-button"
+                            onclick="searchEntity()"
+                        >
+
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                            Investigate
+
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div
+                    class="entity-result"
+                    id="entityResult"
+                >
+
+                    <div class="panel empty-state large-empty">
+
+                        <i class="fa-solid fa-fingerprint"></i>
+
+                        <h3>
+                            Entity Intelligence Ready
+                        </h3>
+
+                        <p>
+                            Search for a user, IP address or device
+                            to build its security intelligence profile.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 ANALYTICS SECTION
+            =================================================== -->
+
+            <section
+                class="page-section"
+                id="analyticsSection"
+            >
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            SECURITY INTELLIGENCE
+                        </span>
+
+                        <h1>
+                            Analytics
+                        </h1>
+
+                        <p>
+                            Explore detection performance and
+                            security activity across the platform.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="analytics-grid">
+
+
+                    <article class="panel chart-panel">
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Event Types
+                            </h3>
+
+                        </div>
+
+                        <div class="chart-container">
+
+                            <canvas id="eventTypesChart"></canvas>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="panel">
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Detection Engines
+                            </h3>
+
+                        </div>
+
+                        <div
+                            id="detectionStats"
+                            class="detection-stats"
+                        ></div>
+
+                    </article>
+
+
+
+                    <article class="panel large-panel">
+
+                        <div class="panel-header">
+
+                            <h3>
+                                Suspicious Source IPs
+                            </h3>
+
+                        </div>
+
+                        <div
+                            id="topIpsList"
+                            class="ranking-list"
+                        ></div>
+
+                    </article>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 SIMULATION SECTION
+            =================================================== -->
+
+            <section
+                class="page-section"
+                id="simulationSection"
+            >
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            SAFE SYNTHETIC ENVIRONMENT
+                        </span>
+
+                        <h1>
+                            Simulation Lab
+                        </h1>
+
+                        <p>
+                            Generate synthetic security telemetry
+                            to demonstrate AEGIS detection,
+                            risk analysis and incident correlation.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="simulation-grid">
+
+
+                    <button
+                        class="scenario-card"
+                        data-scenario="normal"
+                    >
+
+                        <div class="scenario-icon safe">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </div>
+
+                        <h3>
+                            Normal Activity
+                        </h3>
+
+                        <p>
+                            Generate routine enterprise activity.
+                        </p>
+
+                    </button>
+
+
+
+                    <button
+                        class="scenario-card"
+                        data-scenario="authentication"
+                    >
+
+                        <div class="scenario-icon warning">
+
+                            <i class="fa-solid fa-key"></i>
+
+                        </div>
+
+                        <h3>
+                            Authentication Attack
+                        </h3>
+
+                        <p>
+                            Simulate abnormal login behavior.
+                        </p>
+
+                    </button>
+
+
+
+                    <button
+                        class="scenario-card"
+                        data-scenario="network"
+                    >
+
+                        <div class="scenario-icon intelligence">
+
+                            <i class="fa-solid fa-network-wired"></i>
+
+                        </div>
+
+                        <h3>
+                            Network Anomaly
+                        </h3>
+
+                        <p>
+                            Generate abnormal network activity.
+                        </p>
+
+                    </button>
+
+
+
+                    <button
+                        class="scenario-card featured"
+                        data-scenario="account_compromise"
+                    >
+
+                        <span class="recommended-badge">
+                            RECOMMENDED
+                        </span>
+
+                        <div class="scenario-icon danger">
+
+                            <i class="fa-solid fa-user-secret"></i>
+
+                        </div>
+
+                        <h3>
+                            Account Compromise
+                        </h3>
+
+                        <p>
+                            Generate a multi-stage attack sequence.
+                        </p>
+
+                    </button>
+
+
+
+                    <button
+                        class="scenario-card"
+                        data-scenario="mixed"
+                    >
+
+                        <div class="scenario-icon mixed">
+
+                            <i class="fa-solid fa-shuffle"></i>
+
+                        </div>
+
+                        <h3>
+                            Mixed Environment
+                        </h3>
+
+                        <p>
+                            Combine normal and suspicious activity.
+                        </p>
+
+                    </button>
+
+
+                </div>
+
+
+
+                <div class="panel simulation-control">
+
+
+                    <div>
+
+                        <span class="panel-eyebrow">
+                            SIMULATION CONTROL
+                        </span>
+
+                        <h3 id="selectedScenarioTitle">
+                            Account Compromise
+                        </h3>
+
+                        <p id="selectedScenarioDescription">
+                            Generate a multi-stage synthetic attack sequence.
+                        </p>
+
+                    </div>
+
+
+                    <div class="simulation-actions">
+
+                        <div class="event-count-control">
+
+                            <label for="simulationEventCount">
+                                Event Count
+                            </label>
+
+                            <input
+                                type="number"
+                                id="simulationEventCount"
+                                value="15"
+                                min="1"
+                                max="100"
+                            >
+
+                        </div>
+
+
+                        <button
+                            class="primary-button large-button"
+                            id="runSimulationButton"
+                            onclick="runSimulation()"
+                        >
+
+                            <i class="fa-solid fa-play"></i>
+
+                            Launch Simulation
+
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div
+                    class="simulation-output"
+                    id="simulationOutput"
+                ></div>
+
+
+            </section>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- ======================================================
+     TOAST NOTIFICATIONS
+======================================================= -->
+
+<div
+    class="toast-container"
+    id="toastContainer"
+></div>
+
+
+
+<!-- ======================================================
+     LOADING OVERLAY
+======================================================= -->
+
+<div
+    class="loading-overlay"
+    id="loadingOverlay"
+>
+
+    <div class="loader">
+
+        <div class="loader-ring"></div>
+
+        <span>
+            AEGIS AI PROCESSING
+        </span>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     JAVASCRIPT
+======================================================= -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
